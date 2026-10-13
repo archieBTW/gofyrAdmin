@@ -21,6 +21,67 @@
 
 ---
 
+## Screenshots & UI Tour
+
+Explore the dark lavender user interface across desktop and mobile form factors.
+
+### 🖥️ Desktop Web Views (1440 × 900)
+
+#### 1. Dashboard & GORM Model Explorer
+Full-featured GORM data table with column sorting, real-time search, image thumbnails, pagination, and bulk deletion actions.
+![Desktop Dashboard - Model Explorer](docs/screenshots/desktop_03_dashboard.png)
+
+#### 2. Dynamic In-UI GORM Model Creator (`+ Model`)
+Create new GORM models on the fly, define fields, types, and struct tags, and auto-migrate database tables without leaving the browser.
+![Desktop In-UI Model Creator](docs/screenshots/desktop_04_create_model.png)
+
+#### 3. Appearance & Theme Customizer
+Per-user UI customization with 7 accent color palettes (Lavender, Violet, Indigo, Rose, Emerald, Amber, Cyan) and display density toggle (Comfortable vs Compact).
+![Desktop Appearance & Theme Modal](docs/screenshots/desktop_05_theme_modal.png)
+
+#### 4. Interactive API Workbench & Route Runner
+Introspects host Gin routes, executes zero-latency in-memory HTTP calls, and displays structured JSON responses with status badges.
+![Desktop API Workbench](docs/screenshots/desktop_06_workbench.png)
+
+#### 5. Dynamic In-UI Route Creator (`+ Route`)
+Mock new API endpoints with custom methods, status codes, and mock JSON response bodies right from the API Workbench.
+![Desktop In-UI Route Creator](docs/screenshots/desktop_07_create_route.png)
+
+#### 6. Media Library & Storage Backend
+Multi-backend asset management supporting Local Disk and S3/MinIO with drag-and-drop file uploads, image thumbnails, and lightbox previews.
+![Desktop Media Library](docs/screenshots/desktop_08_media_library.png)
+
+#### 7. Security Audit Logs Trail
+Complete mutation and authentication audit trail recording actions, resource targets, actors, client IP addresses, and timestamps.
+![Desktop Audit Logs](docs/screenshots/desktop_09_audit_logs.png)
+
+#### 8. Clean Typographic Authentication & 2FA Security
+Zero-icon typographic branding with segmented 6-digit TOTP verification and emergency single-use backup recovery codes.
+
+| Login Screen | 2FA / OTP Verification |
+|:---:|:---:|
+| ![Desktop Login](docs/screenshots/desktop_01_login.png) | ![Desktop 2FA](docs/screenshots/desktop_02_2fa.png) |
+
+---
+
+### 📱 Mobile Web Views (390 × 844)
+
+Built from the ground up for mobile usability, featuring an off-canvas slide-out drawer, touch-friendly tap targets, and responsive tables.
+
+| Slide-in Navigation Drawer | Model Explorer Table | Appearance & Theme Picker |
+|:---:|:---:|:---:|
+| ![Mobile Navigation Drawer](docs/screenshots/mobile_02_navigation_drawer.png) | ![Mobile Model Explorer](docs/screenshots/mobile_03_dashboard.png) | ![Mobile Theme Modal](docs/screenshots/mobile_04_theme_modal.png) |
+
+| In-UI Model Creator | API Workbench Runner | Media Library & Storage |
+|:---:|:---:|:---:|
+| ![Mobile Model Creator](docs/screenshots/mobile_08_create_model.png) | ![Mobile API Workbench](docs/screenshots/mobile_05_workbench.png) | ![Mobile Media Library](docs/screenshots/mobile_06_media_library.png) |
+
+| Security Audit Logs | Mobile Login Screen | 2FA / OTP Verification |
+|:---:|:---:|:---:|
+| ![Mobile Audit Logs](docs/screenshots/mobile_07_audit_logs.png) | ![Mobile Login](docs/screenshots/mobile_01_login.png) | ![Mobile 2FA](docs/screenshots/mobile_02_2fa.png) |
+
+---
+
 ## Architecture & Layout
 
 ```
