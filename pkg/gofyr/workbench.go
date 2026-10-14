@@ -44,13 +44,17 @@ type WorkbenchExecuteResponse struct {
 	IsJSON     bool              `json:"is_json"`
 }
 
-// IntrospectRoutes retrieves all routes from the host Gin engine.
+// IntrospectRoutes retrieves all routes from the host Gin engine (or target engine).
 func (a *Admin) IntrospectRoutes() []RouteInfo {
-	if a.hostEngine == nil {
+	engine := a.hostEngine
+	if a.targetEngine != nil {
+		engine = a.targetEngine
+	}
+	if engine == nil {
 		return nil
 	}
 
-	routes := a.hostEngine.Routes()
+	routes := engine.Routes()
 	var result []RouteInfo
 
 	for _, r := range routes {
@@ -267,8 +271,12 @@ func (a *Admin) LoadCustomRoutes() error {
 
 // handleExecuteWorkbenchRoute handles POST <BasePath>/api/workbench/execute
 func (a *Admin) handleExecuteWorkbenchRoute(c *gin.Context) {
-	if a.hostEngine == nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Host Gin engine is not mounted"})
+	engine := a.hostEngine
+	if a.targetEngine != nil {
+		engine = a.targetEngine
+	}
+	if engine == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Target Gin engine is not available"})
 		return
 	}
 

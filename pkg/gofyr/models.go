@@ -13,10 +13,11 @@ type GofyrAdminUser struct {
 	PasswordHash string    `json:"-" gorm:"not null"`
 	Name         string    `json:"name" gorm:"size:255"`
 	Role         string    `json:"role" gorm:"size:50;default:admin"`
-	MFASecret    string    `json:"-" gorm:"size:255"`
-	MFAEnabled   bool      `json:"mfa_enabled" gorm:"default:false"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	MFASecret         string    `json:"-" gorm:"size:255"`
+	MFAEnabled        bool      `json:"mfa_enabled" gorm:"default:false"`
+	MustResetPassword bool      `json:"must_reset_password" gorm:"default:false"`
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
 }
 
 func (GofyrAdminUser) TableName() string {

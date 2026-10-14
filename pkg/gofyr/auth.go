@@ -148,13 +148,15 @@ func (a *Admin) handleLogin(c *gin.Context) {
 	a.LogAudit(user.ID, user.Email, "auth_pre_auth_success", "", "", "", c.ClientIP(), "Stage 1 login successful")
 
 	c.JSON(http.StatusOK, gin.H{
-		"pre_auth_token": preAuthToken,
-		"mfa_enrolled":   user.MFAEnabled && user.MFASecret != "",
+		"pre_auth_token":      preAuthToken,
+		"mfa_enrolled":        user.MFAEnabled && user.MFASecret != "",
+		"must_reset_password": user.MustResetPassword,
 		"user": gin.H{
-			"id":    user.ID,
-			"email": user.Email,
-			"name":  user.Name,
-			"role":  user.Role,
+			"id":                  user.ID,
+			"email":               user.Email,
+			"name":                user.Name,
+			"role":                user.Role,
+			"must_reset_password": user.MustResetPassword,
 		},
 	})
 }

@@ -108,6 +108,7 @@ export const api = {
     return request<{
       pre_auth_token: string;
       mfa_enrolled: boolean;
+      must_reset_password?: boolean;
       user: AdminUser;
     }>('/auth/login', {
       method: 'POST',
@@ -129,13 +130,17 @@ export const api = {
     });
   },
 
-  async verifyMFA(preAuthToken: string, code: string) {
+  async verifyMFA(preAuthToken: string, code: string, newPassword?: string) {
     return request<{
       token: string;
       user: AdminUser;
     }>('/auth/mfa/verify', {
       method: 'POST',
-      body: JSON.stringify({ pre_auth_token: preAuthToken, code }),
+      body: JSON.stringify({
+        pre_auth_token: preAuthToken,
+        code,
+        new_password: newPassword || undefined,
+      }),
     });
   },
 

@@ -4,6 +4,7 @@ export interface AdminUser {
   name: string;
   role: string;
   mfa_enabled?: boolean;
+  must_reset_password?: boolean;
 }
 
 export interface FieldInfo {

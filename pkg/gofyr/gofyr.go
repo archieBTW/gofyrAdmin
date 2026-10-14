@@ -18,6 +18,7 @@ type Admin struct {
 	primaryDS      string
 	storageDrivers map[string]storage.Driver
 	hostEngine     *gin.Engine
+	targetEngine   *gin.Engine
 	mu             sync.RWMutex
 }
 
@@ -171,3 +172,11 @@ func (a *Admin) GetStorageDriver(name string) (storage.Driver, bool) {
 	d, ok := a.storageDrivers[name]
 	return d, ok
 }
+
+// SetTargetEngine designates a target API engine for workbench route introspection and execution.
+func (a *Admin) SetTargetEngine(target *gin.Engine) {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	a.targetEngine = target
+}
+

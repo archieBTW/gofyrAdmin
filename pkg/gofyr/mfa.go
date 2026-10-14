@@ -27,6 +27,7 @@ type MFASetupResponse struct {
 type MFAVerifyRequest struct {
 	PreAuthToken string `json:"pre_auth_token" binding:"required"`
 	Code         string `json:"code" binding:"required"`
+	NewPassword  string `json:"new_password"`
 }
 
 // handleMFASetup generates TOTP credentials and single-use recovery codes.
@@ -138,6 +139,22 @@ func (a *Admin) handleMFAVerify(c *gin.Context) {
 		return
 	}
 
+	// If user is required to reset their password, validate and hash new password
+	var newPasswordHash string
+	if user.MustResetPassword {
+		newPwd := strings.TrimSpace(req.NewPassword)
+		if len(newPwd) < 8 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "New password must be at least 8 characters long"})
+			return
+		}
+		hash, err := HashPassword(newPwd)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash new password"})
+			return
+		}
+		newPasswordHash = hash
+	}
+
 	cleanCode := strings.TrimSpace(req.Code)
 	isValid := false
 	usedRecoveryCode := false
@@ -147,8 +164,8 @@ func (a *Admin) handleMFAVerify(c *gin.Context) {
 		isValid = totp.Validate(cleanCode, user.MFASecret)
 	}
 
-	// 2. If not valid TOTP, check single-use recovery codes
-	if !isValid {
+	// 2. If not valid TOTP and NOT on initial forced reset, check single-use recovery codes
+	if !isValid && !user.MustResetPassword {
 		var recoveryCodes []GofyrMFARecoveryCode
 		if err := primaryDB.Where("user_id = ? AND used = ?", user.ID, false).Find(&recoveryCodes).Error; err == nil {
 			normCode := normalizeRecoveryCode(cleanCode)
@@ -171,11 +188,15 @@ func (a *Admin) handleMFAVerify(c *gin.Context) {
 		return
 	}
 
-	// Enable MFA if not already enabled
-	if !user.MFAEnabled {
-		user.MFAEnabled = true
-		primaryDB.Save(&user)
+	// Apply password reset if required
+	if user.MustResetPassword && newPasswordHash != "" {
+		user.PasswordHash = newPasswordHash
+		user.MustResetPassword = false
 	}
+
+	// Enable MFA
+	user.MFAEnabled = true
+	primaryDB.Save(&user)
 
 	// Issue full session token
 	sessionToken, err := a.GenerateSessionToken(&user)
