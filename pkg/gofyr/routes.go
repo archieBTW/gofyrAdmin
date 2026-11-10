@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	"github.com/archieBTW/gofyr/pkg/gofyr/storage"
 	"github.com/archieBTW/gofyr/pkg/gofyr/ui"
+	"github.com/gin-gonic/gin"
 )
 
 // Mount mounts gofyrAdmin routes and embedded UI onto the target Gin engine.
@@ -117,8 +117,19 @@ func (a *Admin) Mount(r *gin.Engine) error {
 				defer file.Close()
 				stat, err := file.Stat()
 				if err == nil && !stat.IsDir() {
-					contentType := mime.TypeByExtension(filepath.Ext(reqPath))
-					if contentType == "" {
+					ext := filepath.Ext(reqPath)
+					contentType := mime.TypeByExtension(ext)
+					if ext == ".webmanifest" {
+						contentType = "application/manifest+json"
+					} else if ext == ".svg" {
+						contentType = "image/svg+xml"
+					} else if ext == ".png" {
+						contentType = "image/png"
+					} else if strings.HasSuffix(reqPath, "sw.js") {
+						contentType = "application/javascript"
+						c.Header("Service-Worker-Allowed", "/")
+						c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+					} else if contentType == "" {
 						contentType = "application/octet-stream"
 					}
 					c.DataFromReader(http.StatusOK, stat.Size(), contentType, file, nil)

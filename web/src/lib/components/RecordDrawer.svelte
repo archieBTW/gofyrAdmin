@@ -100,7 +100,7 @@
       aria-hidden="true"
     ></div>
 
-    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+    <div class="fixed inset-y-0 right-0 max-w-full flex sm:pl-10">
       <div class="w-screen max-w-xl bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col">
         <!-- Header -->
         <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between bg-slate-900/90 backdrop-blur">
@@ -263,7 +263,7 @@
             {/if}
           {/each}
 
-          <div class="pt-6 border-t border-slate-800 flex items-center justify-end gap-3 sticky bottom-0 bg-slate-900 pb-2">
+          <div class="pt-6 border-t border-slate-800 flex items-center justify-end gap-3 sticky bottom-0 bg-slate-900 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <button
               type="button"
               onclick={onClose}

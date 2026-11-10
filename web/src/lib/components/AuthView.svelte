@@ -302,7 +302,8 @@
                       const text = e.clipboardData?.getData('text') || '';
                       handleOtpPaste(text);
                     }}
-                    class="w-12 h-14 text-center text-xl font-mono font-bold rounded-xl bg-slate-800/90 border border-slate-700 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                    autocomplete="one-time-code"
+                    class="w-10 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-mono font-bold rounded-xl bg-slate-800/90 border border-slate-700 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
                   />
                 {/each}
               </div>

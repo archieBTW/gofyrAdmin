@@ -40,7 +40,7 @@
   const currentDS = $derived(datasources.find((d) => d.name === activeDatasource));
 </script>
 
-<header class="h-16 bg-[#111221]/90 backdrop-blur-md border-b border-[#212338] flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30 select-none">
+<header class="min-h-16 bg-[#111221]/90 backdrop-blur-md border-b border-[#212338] flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30 select-none pt-[env(safe-area-inset-top)]">
   <!-- Left: Hamburger (mobile) + Brand + Datasource Switcher -->
   <div class="flex items-center gap-3 sm:gap-6">
     <!-- Mobile Hamburger Toggle -->
